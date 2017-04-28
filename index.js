@@ -26,7 +26,9 @@ javascript:(
         requestAnimationFrame(partial(periodicCheck, resolve, className, childrenIndex))
       });
     };
+
     const betsTab = document.querySelectorAll('.bw-BetslipHeader_Item')[1];
+
     const getTotalStake = aggregates =>
       +[...entries(aggregates)]
         .reduce((acc, [_, {stake}]) => acc + stake, 0)
@@ -37,6 +39,18 @@ javascript:(
         .reduce((acc, [_, {returnValue}]) => acc + returnValue, 0)
         .toFixed(2);
 
+    const getBetSlipValues = bet => {
+      const betType = bet.querySelector('.mbr-OpenBetItemRhs .mbr-OpenBetParticipantRhs_HeaderText').textContent;
+      const match = bet.querySelector('.mbr-OpenBetItemRhs .mbr-OpenBetParticipantRhs_FixtureDescriptionText').textContent;
+      const betInfo = bet.querySelector('.mbr-OpenBetItemRhs .mbr-OpenBetItemRhsDetails_BetInfo');
+      const stake = Number(betInfo.querySelector('.mbr-OpenBetItemRhsDetails_StakeInfo .mbr-OpenBetItemRhsDetails_StakeText').textContent);
+      const returnValue = Number(betInfo.querySelector('.mbr-OpenBetItemRhsDetails_ReturnInfo .mbr-OpenBetItemRhsDetails_ReturnText').textContent);
+      const matchTime = bet.querySelector('.mbr-OpenBetItemRhs .mbr-OpenBetScoresRhs_Time').textContent;
+      const matchScore = bet.querySelector('.mbr-OpenBetItemRhs .mbr-OpenBetScoresRhs_Score-lastscore').textContent;
+
+      return {betType, match, stake, returnValue, matchTime, matchScore};
+    };
+
     if(!window.BET_365_onUnsettledBetsTabClick) {
       window.BET_365_onUnsettledBetsTabClick = e => {
         checkExistanceOfElement('.mbr-OpenBetItemsContainerRhs_BetItemsContainer')
@@ -44,13 +58,7 @@ javascript:(
             const aggregates = Array
               .from(openBets)
               .reduce((acc, bet) => {
-                const betType = bet.querySelector('.mbr-OpenBetItemRhs .mbr-OpenBetParticipantRhs_HeaderText').textContent;
-                const match = bet.querySelector('.mbr-OpenBetItemRhs .mbr-OpenBetParticipantRhs_FixtureDescriptionText').textContent;
-                const betInfo = bet.querySelector('.mbr-OpenBetItemRhs .mbr-OpenBetItemRhsDetails_BetInfo');
-                const stake = Number(betInfo.querySelector('.mbr-OpenBetItemRhsDetails_StakeInfo .mbr-OpenBetItemRhsDetails_StakeText').textContent);
-                const returnValue = Number(betInfo.querySelector('.mbr-OpenBetItemRhsDetails_ReturnInfo .mbr-OpenBetItemRhsDetails_ReturnText').textContent);
-                const matchTime = bet.querySelector('.mbr-OpenBetItemRhs .mbr-OpenBetScoresRhs_Time').textContent;
-                const matchScore = bet.querySelector('.mbr-OpenBetItemRhs .mbr-OpenBetScoresRhs_Score-lastscore').textContent;
+                const {betType, match, stake, returnValue, matchTime, matchScore} = getBetSlipValues(bet);
                 const key = `${match} - ${betType}`;
                 let matchEntry = acc[key];
 
