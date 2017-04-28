@@ -27,7 +27,6 @@ javascript:(
       });
     };
     const betsTab = document.querySelectorAll('.bw-BetslipHeader_Item')[1];
-
     const getTotalStake = aggregates =>
       +[...entries(aggregates)]
         .reduce((acc, [_, {stake}]) => acc + stake, 0)
@@ -45,21 +44,27 @@ javascript:(
             const aggregates = Array
               .from(openBets)
               .reduce((acc, bet) => {
+                const betType = bet.querySelector('.mbr-OpenBetItemRhs .mbr-OpenBetParticipantRhs_HeaderText').textContent;
                 const match = bet.querySelector('.mbr-OpenBetItemRhs .mbr-OpenBetParticipantRhs_FixtureDescriptionText').textContent;
                 const betInfo = bet.querySelector('.mbr-OpenBetItemRhs .mbr-OpenBetItemRhsDetails_BetInfo');
                 const stake = Number(betInfo.querySelector('.mbr-OpenBetItemRhsDetails_StakeInfo .mbr-OpenBetItemRhsDetails_StakeText').textContent);
                 const returnValue = Number(betInfo.querySelector('.mbr-OpenBetItemRhsDetails_ReturnInfo .mbr-OpenBetItemRhsDetails_ReturnText').textContent);
                 const matchTime = bet.querySelector('.mbr-OpenBetItemRhs .mbr-OpenBetScoresRhs_Time').textContent;
+                const matchScore = bet.querySelector('.mbr-OpenBetItemRhs .mbr-OpenBetScoresRhs_Score-lastscore').textContent;
+                const key = `${match} - ${betType}`;
+                let matchEntry = acc[key];
 
-                if(acc[match]) {
-                  acc[match] = {
-                    stake: acc[match].stake + stake,
-                    returnValue: acc[match].returnValue + returnValue,
-                    matchTime
+                if(matchEntry) {
+                  acc[key] = {
+                    stake: matchEntry.stake + stake,
+                    returnValue: matchEntry.returnValue + returnValue,
+                    matchTime,
+                    matchScore,
+                    betType
                   }
                 }
                 else {
-                  acc[match] = {stake, returnValue, matchTime};
+                  acc[key] = {stake, returnValue, matchTime, matchScore, betType};
                 }
                 return acc;
               },
