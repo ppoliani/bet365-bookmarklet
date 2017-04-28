@@ -11,4 +11,4 @@ Add Bookmarklet to Chrome:
 3) Select the “Bookmarks Tab” folder on the left.
 4) Click the “Organize” link, then “Add Page” in the drop down.
 5) You should see two input fields. ...
-6) Paste the javascript code (index.js) into the second field.
+6) Paste the javascript code (bookmarklet.js) into the second field.
