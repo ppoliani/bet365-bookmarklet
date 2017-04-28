@@ -4,7 +4,9 @@ javascript:(
 
     const periodicCheck = (resolve, className, childrenIndex) => {
       try{
-        const elem = document.querySelector(className).children[childrenIndex];
+        const elem = childrenIndex
+          ? document.querySelector(className).children[childrenIndex]
+          : document.querySelector(className).children;
         if(elem) return resolve(elem);
         requestAnimationFrame(partial(periodicCheck, resolve, className, childrenIndex))
       }
@@ -22,7 +24,32 @@ javascript:(
 
     if(!window.BET_365_onUnsettledBetsTabClick) {
       window.BET_365_onUnsettledBetsTabClick = e => {
-        console.log('Parsing unsettled bets', e.target);
+        checkExistanceOfElement('.mbr-OpenBetItemsContainerRhs_BetItemsContainer')
+          .then(openBets => {
+            const aggregates = Array
+              .from(openBets)
+              .reduce((acc, bet) => {
+                const match = bet.querySelector('.mbr-OpenBetItemRhs .mbr-OpenBetParticipantRhs_FixtureDescriptionText').textContent;
+                const betInfo = bet.querySelector('.mbr-OpenBetItemRhs .mbr-OpenBetItemRhsDetails_BetInfo');
+                const stake = Number(betInfo.querySelector('.mbr-OpenBetItemRhsDetails_StakeInfo .mbr-OpenBetItemRhsDetails_StakeText').textContent);
+                const returnValue = Number(betInfo.querySelector('.mbr-OpenBetItemRhsDetails_ReturnInfo .mbr-OpenBetItemRhsDetails_ReturnText').textContent);
+
+                if(acc[match]) {
+                  acc[match] = {
+                    stake: acc[match].stake + stake,
+                    returnValue: acc[match].returnValue + returnValue
+                  }
+                }
+                else {
+                  acc[match] = {stake, returnValue};
+                }
+                return acc;
+              },
+              {}
+            );
+
+            console.table(aggregates);
+        });
       };
     }
 
