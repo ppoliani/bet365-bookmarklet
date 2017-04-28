@@ -1,5 +1,11 @@
 javascript:(
   () => {
+    const entries = function *(obj) {
+      for (let key of Object.keys(obj)) {
+        yield [key, obj[key]];
+      }
+    };
+
     const partial = (fn, ...args) => (...restArgs) => fn.apply(this, args.concat(restArgs));
 
     const periodicCheck = (resolve, className, childrenIndex) => {
@@ -21,6 +27,16 @@ javascript:(
       });
     };
     const betsTab = document.querySelectorAll('.bw-BetslipHeader_Item')[1];
+
+    const getTotalStake = aggregates =>
+      +[...entries(aggregates)]
+        .reduce((acc, [_, {stake}]) => acc + stake, 0)
+        .toFixed(2);
+
+    const getTotalReturnValue = aggregates =>
+       +[...entries(aggregates)]
+        .reduce((acc, [_, {returnValue}]) => acc + returnValue, 0)
+        .toFixed(2);
 
     if(!window.BET_365_onUnsettledBetsTabClick) {
       window.BET_365_onUnsettledBetsTabClick = e => {
@@ -47,6 +63,10 @@ javascript:(
               },
               {}
             );
+            aggregates['Total'] = {
+              stake: getTotalStake(aggregates),
+              returnValue: getTotalReturnValue(aggregates)
+            };
 
             console.table(aggregates);
         });
