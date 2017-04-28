@@ -49,15 +49,17 @@ javascript:(
                 const betInfo = bet.querySelector('.mbr-OpenBetItemRhs .mbr-OpenBetItemRhsDetails_BetInfo');
                 const stake = Number(betInfo.querySelector('.mbr-OpenBetItemRhsDetails_StakeInfo .mbr-OpenBetItemRhsDetails_StakeText').textContent);
                 const returnValue = Number(betInfo.querySelector('.mbr-OpenBetItemRhsDetails_ReturnInfo .mbr-OpenBetItemRhsDetails_ReturnText').textContent);
+                const matchTime = bet.querySelector('.mbr-OpenBetItemRhs .mbr-OpenBetScoresRhs_Time').textContent;
 
                 if(acc[match]) {
                   acc[match] = {
                     stake: acc[match].stake + stake,
-                    returnValue: acc[match].returnValue + returnValue
+                    returnValue: acc[match].returnValue + returnValue,
+                    matchTime
                   }
                 }
                 else {
-                  acc[match] = {stake, returnValue};
+                  acc[match] = {stake, returnValue, matchTime};
                 }
                 return acc;
               },
