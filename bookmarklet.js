@@ -41,6 +41,7 @@ javascript:(
 
     const getBetSlipValues = bet => {
       const betType = bet.querySelector('.mbr-OpenBetItemRhs .mbr-OpenBetParticipantRhs_HeaderText').textContent;
+      const betMarket = bet.querySelector('.mbr-OpenBetItemRhs .mbr-OpenBetParticipantRhs_MarketText').textContent;
       const match = bet.querySelector('.mbr-OpenBetItemRhs .mbr-OpenBetParticipantRhs_FixtureDescriptionText').textContent;
       const betInfo = bet.querySelector('.mbr-OpenBetItemRhs .mbr-OpenBetItemRhsDetails_BetInfo');
 
@@ -60,7 +61,7 @@ javascript:(
       const matchTime = bet.querySelector('.mbr-OpenBetItemRhs .mbr-OpenBetScoresRhs_Time').textContent;
       const matchScore = bet.querySelector('.mbr-OpenBetItemRhs .mbr-OpenBetScoresRhs_Score-lastscore').textContent;
 
-      return {betType, match, stake, returnValue, matchTime, matchScore};
+      return {betType, betMarket, match, stake, returnValue, matchTime, matchScore};
     };
 
 
@@ -71,7 +72,7 @@ javascript:(
             const aggregates = Array
               .from(openBets)
               .reduce((acc, bet) => {
-                const {betType, match, stake, returnValue, matchTime, matchScore} = getBetSlipValues(bet);
+                const {betType, betMarket, match, stake, returnValue, matchTime, matchScore} = getBetSlipValues(bet);
                 const key = `${match} - ${betType}`;
                 let matchEntry = acc[key];
 
@@ -81,11 +82,12 @@ javascript:(
                     returnValue: matchEntry.returnValue + returnValue,
                     matchTime,
                     matchScore,
-                    betType
+                    betType,
+                    betMarket
                   }
                 }
                 else {
-                  acc[key] = {stake, returnValue, matchTime, matchScore, betType};
+                  acc[key] = {stake, returnValue, matchTime, matchScore, betType, betMarket};
                 }
                 return acc;
               },

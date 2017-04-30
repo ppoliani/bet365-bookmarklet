@@ -11,6 +11,7 @@ export default class BetAggregate extends Component {
          <TableRow>
             <TableRowColumn>{key}</TableRowColumn>
             <TableRowColumn>{value.betType}</TableRowColumn>
+            <TableRowColumn>{value.betMarket}</TableRowColumn>
             <TableRowColumn>{value.stake}</TableRowColumn>
             <TableRowColumn>{value.returnValue}</TableRowColumn>
             <TableRowColumn>{value.matchTime}</TableRowColumn>
@@ -26,6 +27,7 @@ export default class BetAggregate extends Component {
           <TableRow>
             <TableHeaderColumn>Game</TableHeaderColumn>
             <TableHeaderColumn>BetType</TableHeaderColumn>
+             <TableHeaderColumn>BetMarket</TableHeaderColumn>
             <TableHeaderColumn>Stake</TableHeaderColumn>
             <TableHeaderColumn>Return</TableHeaderColumn>
             <TableHeaderColumn>MatchTime</TableHeaderColumn>

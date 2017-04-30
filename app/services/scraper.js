@@ -1,12 +1,12 @@
 import {checkExistanceOfElement, periodicCheck, partial} from './utils';
 import {getTotalStake, getTotalReturnValue} from './betslip';
-import {getBetType, getMatch, getStake, getReturnValue, getMatchTime, getMatchScore} from './scrapers';
+import {getBetType, betMarket, getMatch, getStake, getReturnValue, getMatchTime, getMatchScore, getBetMarket} from './scrapers';
 
 const calculateAggregates = openBets => {
   const aggregates = Array
     .from(openBets)
     .reduce((acc, bet) => {
-      const {betType, match, stake, returnValue, matchTime, matchScore} = getBetSlipValues(bet);
+      const {betType, betMarket, match, stake, returnValue, matchTime, matchScore} = getBetSlipValues(bet);
       const key = `${match} - ${betType}`;
       let matchEntry = acc[key];
 
@@ -16,11 +16,12 @@ const calculateAggregates = openBets => {
           returnValue: matchEntry.returnValue + returnValue,
           matchTime,
           matchScore,
-          betType
+          betType,
+          betMarket
         }
       }
       else {
-        acc[key] = {stake, returnValue, matchTime, matchScore, betType};
+        acc[key] = {stake, returnValue, matchTime, matchScore, betType, betMarket};
       }
       return acc;
     },
@@ -39,6 +40,7 @@ const calculateAggregates = openBets => {
 
 const getBetSlipValues = bet => {
   const betType = getBetType(bet);
+  const betMarket = getBetMarket(bet);
   const match = getMatch(bet);
   const betInfo = bet.querySelector('.mbr-OpenBetItemRhs_OpenBetContainer .mbr-OpenBetItemRhsDetails_BetInfo');
   const stake = getStake(betInfo);
@@ -46,7 +48,7 @@ const getBetSlipValues = bet => {
   const matchTime = getMatchTime(bet);
   const matchScore = getMatchScore(bet);
 
-  return {betType, match, stake, returnValue, matchTime, matchScore};
+  return {betType, betMarket, match, stake, returnValue, matchTime, matchScore};
 };
 
 export const scrape = () =>

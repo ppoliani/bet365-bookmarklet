@@ -14,6 +14,7 @@ const findStake = betInfo => {
 
 
 export const getBetType = parentElem => safeDomTextContentCheck('.mbr-OpenBetItemRhs_OpenBetContainer .mbr-OpenBetParticipantRhs_HeaderText', parentElem);
+export const getBetMarket = parentElem => safeDomTextContentCheck('.mbr-OpenBetItemRhs_OpenBetContainer .mbr-OpenBetParticipantRhs_MarketText', parentElem);
 export const getMatch = parentElem => safeDomTextContentCheck('.mbr-OpenBetItemRhs_OpenBetContainer .mbr-OpenBetParticipantRhs_FixtureDescriptionText', parentElem);
 export const getStake = parentElem => findStake(parentElem);
 export const getReturnValue = parentElem => Number(safeDomTextContentCheck('.mbr-OpenBetItemRhsDetails_ReturnInfo .mbr-OpenBetItemRhsDetails_ReturnText', parentElem));
