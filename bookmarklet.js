@@ -44,13 +44,26 @@ javascript:(
       const betMarket = bet.querySelector('.mbr-OpenBetItemRhs .mbr-OpenBetParticipantRhs_MarketText').textContent;
       const match = bet.querySelector('.mbr-OpenBetItemRhs .mbr-OpenBetParticipantRhs_FixtureDescriptionText').textContent;
       const betInfo = bet.querySelector('.mbr-OpenBetItemRhs .mbr-OpenBetItemRhsDetails_BetInfo');
-      const stake = Number(betInfo.querySelector('.mbr-OpenBetItemRhsDetails_StakeInfo .mbr-OpenBetItemRhsDetails_StakeText').textContent);
+
+      var stake = 0;
+
+      if (betInfo.querySelector('.mbr-OpenBetItemRhsDetails_StakeInfo .mbr-OpenBetItemRhsDetails_StakeLabel').textContent === "Stake"){
+        stake = Number(betInfo.querySelector('.mbr-OpenBetItemRhsDetails_StakeInfo .mbr-OpenBetItemRhsDetails_StakeText').textContent);
+      } else {
+        const stakeLabel = Number(betInfo.querySelector('.mbr-OpenBetItemRhsDetails_StakeInfo .mbr-OpenBetItemRhsDetails_StakeLabel').textContent.match(/([0-9.]+)/g));
+        const stakeText = Number(betInfo.querySelector('.mbr-OpenBetItemRhsDetails_StakeInfo .mbr-OpenBetItemRhsDetails_StakeText').textContent.match(/([0-9.]+)/g));
+        stake = stakeLabel * stakeText;
+      }
+
+
+
       const returnValue = Number(betInfo.querySelector('.mbr-OpenBetItemRhsDetails_ReturnInfo .mbr-OpenBetItemRhsDetails_ReturnText').textContent);
       const matchTime = bet.querySelector('.mbr-OpenBetItemRhs .mbr-OpenBetScoresRhs_Time').textContent;
       const matchScore = bet.querySelector('.mbr-OpenBetItemRhs .mbr-OpenBetScoresRhs_Score-lastscore').textContent;
 
       return {betType, betMarket, match, stake, returnValue, matchTime, matchScore};
     };
+
 
     if(!window.BET_365_onUnsettledBetsTabClick) {
       window.BET_365_onUnsettledBetsTabClick = e => {
