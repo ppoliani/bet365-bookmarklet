@@ -1,17 +1,27 @@
 import React, { Component } from 'react';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
+import {autobind} from 'core-decorators';
 import {entries} from '../../services/utils';
+import {gotoMatchPage} from '../../services/scraper';
 
 const styles = {fontSize: '11px'};
 const colStyle = Object.assign({width: '160px'}, styles);
 
 export default class BetAggregate extends Component {
+  @autobind
+  onRowClick(_, __, event) {
+    const {aggregates} = this.props;
+    const columnText = event.target.textContent;
+
+    gotoMatchPage(aggregates[columnText].matchLinkName)
+  }
+
   renderBody() {
     const {aggregates} = this.props;
 
     return [...entries(aggregates)]
       .map(([key, value]) => (
-         <TableRow>
+         <TableRow >
             <TableRowColumn style={colStyle}>{key}</TableRowColumn>
             <TableRowColumn style={{width: '75px', fontSize: '11px'}}>{value.betType}</TableRowColumn>
             <TableRowColumn style={{width: '75px', fontSize: '11px'}}>{value.betMarket}</TableRowColumn>
@@ -25,7 +35,7 @@ export default class BetAggregate extends Component {
 
   renderTable() {
     return (
-       <Table>
+       <Table onCellClick={this.onRowClick} >
         <TableHeader displaySelectAll={false} adjustForCheckbox={false} enableSelectAll={false}>
           <TableRow>
             <TableHeaderColumn style={colStyle}>Game</TableHeaderColumn>

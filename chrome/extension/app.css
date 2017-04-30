@@ -3,6 +3,10 @@ html, body {
   padding: 0;
 }
 
+tr > td:first-child {
+  cursor: pointer;
+}
+
 button {
   margin: 0;
   padding: 0;

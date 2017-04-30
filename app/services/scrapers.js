@@ -20,4 +20,8 @@ export const getStake = parentElem => findStake(parentElem);
 export const getReturnValue = parentElem => Number(safeDomTextContentCheck('.mbr-OpenBetItemRhsDetails_ReturnInfo .mbr-OpenBetItemRhsDetails_ReturnText', parentElem));
 export const getMatchTime = parentElem => safeDomTextContentCheck('.mbr-OpenBetItemRhs_OpenBetContainer .mbr-OpenBetScoresRhs_Time', parentElem);
 export const getMatchScore = parentElem => safeDomTextContentCheck('.mbr-OpenBetItemRhs_OpenBetContainer .mbr-OpenBetScoresRhs_Score-lastscore', parentElem);
-
+export const getMatchLinkName = parentElem => safeDomTextContentCheck('.mbr-OpenBetParticipantRhs_FixtureDescriptionText', parentElem);
+export const getMatchLink = match => {
+  const links = document.querySelectorAll('.mbr-OpenBetItemRhs_OpenBetContainer .mbr-OpenBetParticipantRhs_FixtureDescriptionText')
+  return Array.from(links).find(e => e.textContent === match);
+};

@@ -1,12 +1,23 @@
 import {checkExistanceOfElement, periodicCheck, partial} from './utils';
 import {getTotalStake, getTotalReturnValue} from './betslip';
-import {getBetType, betMarket, getMatch, getStake, getReturnValue, getMatchTime, getMatchScore, getBetMarket} from './scrapers';
+import {
+  getBetType,
+  betMarket,
+  getMatch,
+  getStake,
+  getReturnValue,
+  getMatchTime,
+  getMatchScore,
+  getBetMarket,
+  getMatchLinkName,
+  getMatchLink
+} from './scrapers';
 
 const calculateAggregates = openBets => {
   const aggregates = Array
     .from(openBets)
     .reduce((acc, bet) => {
-      const {betType, betMarket, match, stake, returnValue, matchTime, matchScore} = getBetSlipValues(bet);
+      const {betType, betMarket, match, stake, returnValue, matchTime, matchScore, matchLinkName} = getBetSlipValues(bet);
       const key = `${match} - ${betType}`;
       let matchEntry = acc[key];
 
@@ -17,11 +28,12 @@ const calculateAggregates = openBets => {
           matchTime,
           matchScore,
           betType,
-          betMarket
+          betMarket,
+          matchLinkName
         }
       }
       else {
-        acc[key] = {stake, returnValue, matchTime, matchScore, betType, betMarket};
+        acc[key] = {stake, returnValue, matchTime, matchScore, betType, betMarket, matchLinkName};
       }
       return acc;
     },
@@ -47,8 +59,9 @@ const getBetSlipValues = bet => {
   const returnValue = getReturnValue(betInfo);
   const matchTime = getMatchTime(bet);
   const matchScore = getMatchScore(bet);
+  const matchLinkName = getMatchLinkName(bet);
 
-  return {betType, betMarket, match, stake, returnValue, matchTime, matchScore};
+  return {betType, betMarket, match, stake, returnValue, matchTime, matchScore, matchLinkName};
 };
 
 export const scrape = () =>
@@ -97,3 +110,23 @@ export const scrape = () =>
         );
       })
   });
+
+
+export const gotoMatchPage = match => {
+  chrome.tabs.query({active: true, currentWindow: true}, tabs => {
+    const activeTab = tabs[0];
+
+    chrome.tabs.executeScript(
+      activeTab.id,
+      {
+        code: `
+          (match => {
+            ${getMatchLink.toString()}
+
+            getMatchLink(match).click();
+          })('${match}')
+        `
+      }
+    );
+  });
+};
