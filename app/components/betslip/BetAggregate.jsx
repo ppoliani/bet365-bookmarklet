@@ -22,7 +22,7 @@ export default class BetAggregate extends Component {
     return [...entries(aggregates)]
       .map(([key, value]) => (
          <TableRow >
-            <TableRowColumn style={colStyle} title={key}>{value.matchLinkName}</TableRowColumn>
+            <TableRowColumn style={colStyle} title={key}>{key}</TableRowColumn>
             <TableRowColumn style={{width: '75px', fontSize: '11px'}} title={value.betType}>{value.betType}</TableRowColumn>
             <TableRowColumn style={{width: '75px', fontSize: '11px'}} title={value.betMarket}>{value.betMarket}</TableRowColumn>
             <TableRowColumn style={styles}>{value.stake}</TableRowColumn>
