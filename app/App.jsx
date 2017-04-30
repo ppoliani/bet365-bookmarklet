@@ -10,9 +10,13 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    scrape().then(results => {
-      this.setState({results})
-    });
+    scrape()
+      .then(results => {
+        this.setState({results})
+      })
+      .catch(error => {
+        this.setState({ results: `${error.message}` });
+      });
   }
 
   render() {

@@ -7,7 +7,7 @@ export const entries = function *(obj) {
 export const partial = (fn, ...args) => (...restArgs) => fn.apply(this, args.concat(restArgs));
 
 export const periodicCheck = (resolve, className, childrenIndex) => {
-  try{
+  try {
     const elem = childrenIndex
       ? document.querySelector(className).children[childrenIndex]
       : document.querySelector(className).children;

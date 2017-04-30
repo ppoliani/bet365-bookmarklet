@@ -2,7 +2,7 @@ import {checkExistanceOfElement, periodicCheck, partial} from './utils';
 import {getTotalStake, getTotalReturnValue} from './betslip';
 import {getBetType, getMatch, getStake, getReturnValue, getMatchTime, getMatchScore} from './scrapers';
 
-const onBetslipClick = openBets => {
+const calculateAggregates = openBets => {
   const aggregates = Array
     .from(openBets)
     .reduce((acc, bet) => {
@@ -60,7 +60,12 @@ export const scrape = () =>
             .parse(openBets)
             .map(bet => parser.parseFromString(bet, 'text/html'));
 
-          resolve(onBetslipClick(docs));
+          try {
+            resolve(calculateAggregates(docs));
+          }
+          catch(_) {
+            reject(new Error('No bets available!'));
+          }
         });
 
         chrome.tabs.executeScript(
