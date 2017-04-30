@@ -7,11 +7,10 @@ import style from './App.css';
 export default class App extends Component {
   constructor(props, state) {
     super(props, state);
-
     this.state = {aggregates: null, error: ''};
   }
 
-  componentDidMount() {
+  scrapeBets() {
     scrape()
       .then(aggregates => {
         this.setState({aggregates})
@@ -19,6 +18,10 @@ export default class App extends Component {
       .catch(error => {
         this.setState({ error: `${error.message}` });
       });
+  }
+
+  componentDidMount() {
+    this.scrapeBets();
   }
 
   renderTabs() {
