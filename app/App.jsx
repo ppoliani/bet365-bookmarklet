@@ -4,7 +4,6 @@ import {scrape} from './services/scraper';
 import BetAggregate from './components/betslip/BetAggregate';
 import style from './App.css';
 
-
 export default class App extends Component {
   constructor(props, state) {
     super(props, state);
