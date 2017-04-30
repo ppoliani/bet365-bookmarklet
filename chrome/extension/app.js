@@ -2,7 +2,7 @@ import 'babel-polyfill';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Root from '../../app/Root';
-import './todoapp.css';
+import './app.css';
 
 chrome.storage.local.get('state', (obj) => {
   const { state } = obj;
