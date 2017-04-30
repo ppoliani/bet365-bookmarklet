@@ -46,6 +46,7 @@ const baseDevConfig = () => ({
     loaders: [{
       test: /\.(js|jsx)$/,
       loader: 'babel',
+      exclude: /node_modules/,
       query: {
         presets: ['react-hmre']
       }
