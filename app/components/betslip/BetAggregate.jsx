@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 import {entries} from '../../services/utils';
 
+const styles = {fontSize: '11px'};
+const colStyle = Object.assign({width: '160px'}, styles);
+
 export default class BetAggregate extends Component {
   renderBody() {
     const {aggregates} = this.props;
@@ -9,13 +12,13 @@ export default class BetAggregate extends Component {
     return [...entries(aggregates)]
       .map(([key, value]) => (
          <TableRow>
-            <TableRowColumn>{key}</TableRowColumn>
-            <TableRowColumn>{value.betType}</TableRowColumn>
-            <TableRowColumn>{value.betMarket}</TableRowColumn>
-            <TableRowColumn>{value.stake}</TableRowColumn>
-            <TableRowColumn>{value.returnValue}</TableRowColumn>
-            <TableRowColumn>{value.matchTime}</TableRowColumn>
-            <TableRowColumn>{value.matchScore}</TableRowColumn>
+            <TableRowColumn style={colStyle}>{key}</TableRowColumn>
+            <TableRowColumn style={{width: '75px', fontSize: '11px'}}>{value.betType}</TableRowColumn>
+            <TableRowColumn style={{width: '75px', fontSize: '11px'}}>{value.betMarket}</TableRowColumn>
+            <TableRowColumn style={styles}>{value.stake}</TableRowColumn>
+            <TableRowColumn style={styles}>{value.returnValue}</TableRowColumn>
+            <TableRowColumn style={styles}>{value.matchTime}</TableRowColumn>
+            <TableRowColumn style={styles}>{value.matchScore}</TableRowColumn>
           </TableRow>
       ));
   }
@@ -25,13 +28,13 @@ export default class BetAggregate extends Component {
        <Table>
         <TableHeader displaySelectAll={false} adjustForCheckbox={false} enableSelectAll={false}>
           <TableRow>
-            <TableHeaderColumn>Game</TableHeaderColumn>
-            <TableHeaderColumn>BetType</TableHeaderColumn>
-             <TableHeaderColumn>BetMarket</TableHeaderColumn>
-            <TableHeaderColumn>Stake</TableHeaderColumn>
-            <TableHeaderColumn>Return</TableHeaderColumn>
-            <TableHeaderColumn>MatchTime</TableHeaderColumn>
-            <TableHeaderColumn>MatchScore</TableHeaderColumn>
+            <TableHeaderColumn style={colStyle}>Game</TableHeaderColumn>
+            <TableHeaderColumn style={{width: '75px', fontSize: '11px'}}>BetType</TableHeaderColumn>
+             <TableHeaderColumn style={{width: '75px', fontSize: '11px'}}>BetMarket</TableHeaderColumn>
+            <TableHeaderColumn style={styles}>Stake</TableHeaderColumn>
+            <TableHeaderColumn style={styles}>Return</TableHeaderColumn>
+            <TableHeaderColumn style={styles}>Time</TableHeaderColumn>
+            <TableHeaderColumn style={styles}>Score</TableHeaderColumn>
           </TableRow>
         </TableHeader>
         <TableBody displayRowCheckbox={false} stripedRows={true} showRowHover={true}>
