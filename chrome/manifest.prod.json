@@ -1,10 +1,10 @@
 {
-  "version": "0.0.0",
-  "name": "react-chrome-extension-example",
+  "version": "1.0.0",
+  "name": "Bet365 chrome extension aggregator",
   "manifest_version": 2,
-  "description": "Example for react-chrome-extension-boilerplate",
+  "description": "Bet365 chrome extension aggregator",
   "browser_action": {
-    "default_title": "React Chrome Extension Example",
+    "default_title": "Bet365 Chrome Extension Aggregator",
     "default_popup": "popup.html"
   },
   "icons": {
@@ -18,6 +18,6 @@
   "background": {
     "page": "background.html"
   },
-  "permissions": [ "contextMenus", "tabs", "storage", "https://github.com/*" ],
+  "permissions": [ "contextMenus", "tabs", "storage", "https://github.com/*", "https://www.bet365.com/#/IP/" ],
   "content_security_policy": "default-src 'self'; script-src 'self'; style-src * 'unsafe-inline'; img-src 'self' data:;"
 }

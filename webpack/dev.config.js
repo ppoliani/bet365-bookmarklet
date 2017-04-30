@@ -7,7 +7,7 @@ const customPath = path.join(__dirname, './customPublicPath');
 const hotScript = 'webpack-hot-middleware/client?path=__webpack_hmr&dynamicPublicPath=true';
 
 const baseDevConfig = () => ({
-  devtool: 'eval-cheap-module-source-map',
+  devtool: 'cheap-module-source-map',
   entry: {
     todoapp: [customPath, hotScript, path.join(__dirname, '../chrome/extension/todoapp')],
     background: [customPath, hotScript, path.join(__dirname, '../chrome/extension/background')],
@@ -46,7 +46,6 @@ const baseDevConfig = () => ({
     loaders: [{
       test: /\.(js|jsx)$/,
       loader: 'babel',
-      exclude: /node_modules/,
       query: {
         presets: ['react-hmre']
       }

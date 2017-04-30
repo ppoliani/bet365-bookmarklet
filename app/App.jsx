@@ -1,19 +1,24 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import {scrape} from './services/scraper';
 import style from './App.css';
 
 export default class App extends Component {
+  constructor(props, state) {
+    super(props, state);
 
-  static propTypes = {
-    todos: PropTypes.array.isRequired,
-    actions: PropTypes.object.isRequired
-  };
+    this.state = {results: null}
+  }
+
+  componentDidMount() {
+    scrape().then(results => {
+      this.setState({results})
+    });
+  }
 
   render() {
-    const { todos, actions } = this.props;
-
     return (
       <div className={style.normal}>
-        Home Page
+        {this.state.results}
       </div>
     );
   }

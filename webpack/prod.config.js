@@ -38,7 +38,6 @@ module.exports = {
     loaders: [{
       test: /\.(js|jsx)$/,
       loader: 'babel',
-      exclude: /node_modules/,
       query: {
         presets: ['react-optimize']
       }
