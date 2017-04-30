@@ -1,28 +1,43 @@
 import React, { Component } from 'react';
+import {Tabs, Tab} from 'material-ui/Tabs';
 import {scrape} from './services/scraper';
+import BetAggregate from './components/betslip/BetAggregate';
 import style from './App.css';
+
 
 export default class App extends Component {
   constructor(props, state) {
     super(props, state);
 
-    this.state = {results: null}
+    this.state = {aggregates: null, error: ''};
   }
 
   componentDidMount() {
     scrape()
-      .then(results => {
-        this.setState({results})
+      .then(aggregates => {
+        this.setState({aggregates})
       })
       .catch(error => {
-        this.setState({ results: `${error.message}` });
+        this.setState({ error: `${error.message}` });
       });
+  }
+
+  renderTabs() {
+    const {aggregates, error} = this.state;
+
+    return (
+      <Tabs>
+        <Tab label="My Bets">
+          <BetAggregate aggregates={aggregates} error={error}/>
+        </Tab>
+      </Tabs>
+    );
   }
 
   render() {
     return (
       <div className={style.normal}>
-        {this.state.results}
+        {this.renderTabs()}
       </div>
     );
   }

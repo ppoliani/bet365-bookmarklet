@@ -40,11 +40,11 @@ const calculateAggregates = openBets => {
 const getBetSlipValues = bet => {
   const betType = getBetType(bet);
   const match = getMatch(bet);
-  const betInfo = bet.querySelector('.mbr-OpenBetItemRhs .mbr-OpenBetItemRhsDetails_BetInfo');
+  const betInfo = bet.querySelector('.mbr-OpenBetItemRhs_OpenBetContainer .mbr-OpenBetItemRhsDetails_BetInfo');
   const stake = getStake(betInfo);
   const returnValue = getReturnValue(betInfo);
-  const matchTime = getMatchTime(betInfo);
-  const matchScore = getMatchScore(betInfo);
+  const matchTime = getMatchTime(bet);
+  const matchScore = getMatchScore(bet);
 
   return {betType, match, stake, returnValue, matchTime, matchScore};
 };
