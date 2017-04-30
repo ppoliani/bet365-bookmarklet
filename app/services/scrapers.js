@@ -1,6 +1,7 @@
 const safeDomTextContentCheck = (className, parent) => parent.querySelector(className) ? parent.querySelector(className).textContent : '';
 
 export const getBetType = parentElem => safeDomTextContentCheck('.mbr-OpenBetItemRhs_OpenBetContainer .mbr-OpenBetParticipantRhs_HeaderText', parentElem);
+export const getBetMarket = parentElem => safeDomTextContentCheck('.mbr-OpenBetItemRhs_OpenBetContainer .mbr-OpenBetParticipantRhs_MarketText', parentElem);
 export const getMatch = parentElem => safeDomTextContentCheck('.mbr-OpenBetItemRhs_OpenBetContainer .mbr-OpenBetParticipantRhs_FixtureDescriptionText', parentElem);
 export const getStake = parentElem => Number(safeDomTextContentCheck('.mbr-OpenBetItemRhsDetails_StakeInfo .mbr-OpenBetItemRhsDetails_StakeText', parentElem));
 export const getReturnValue = parentElem => Number(safeDomTextContentCheck('.mbr-OpenBetItemRhsDetails_ReturnInfo .mbr-OpenBetItemRhsDetails_ReturnText', parentElem));
